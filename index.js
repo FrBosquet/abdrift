@@ -25,21 +25,28 @@ const createTypesDifferMessage = (type1, value1, type2, value2) => ({
 })
 
 const compare = (type, value1, value2) => {
-  let result = null
   switch (type) {
     case 'number':
     case 'string':
-    case 'boolean': result = compareValues(value1, value2); break;
-    case 'function': result = compareFunctions( value1, value2 ); break;
-    case 'object': result = getDiffs(value1, value2); break;
+    case 'boolean': return compareValues(value1, value2)
+    case 'function': return compareFunctions( value1, value2 )
+    case 'object': return getDiffs(value1, value2)
   }
-  return result
+  return null
 }
 
-const compareValues = (val1, val2) => val1 !== val2 ? [val1, val2] : null
+const compareValues = (val1, val2) => val1 !== val2 ? {
+  difference: 'The values differ',
+  value1: val1,
+  value2: val2
+} : null
 
 const compareFunctions = (func1, func2) => 
-  func1.toString() !== func2.toString() ? [func1.toString(), func2.toString()] : null
+  func1.toString() !== func2.toString() ? {
+    difference: 'The functions differ',
+    func1: func1.toString(),
+    func2: func2.toString()
+  } : null
 
 const getDiffs = ( obj1, obj2 ) => {
   const everyKey = getEveryKeyIn( obj1, obj2)
