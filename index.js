@@ -1,4 +1,4 @@
-module.exports.everyKeyIn = ( obj1, obj2 ) => {
+everyKeyIn = ( obj1, obj2 ) => {
   return [...Object.keys(obj1), ...Object.keys(obj2)]
     .reduce((keys, value) => 
      keys.indexOf(value) === -1 ?
@@ -8,22 +8,22 @@ module.exports.everyKeyIn = ( obj1, obj2 ) => {
     .sort()
 }
 
-module.exports.firstKeyMissed = value2 => ({
-  difference: 'Key miss in first object',
+firstKeyMissed = value2 => ({
+  difference: 'Key not in first object',
   value2
 })
 
-module.exports.secondKeyMissed = value1 => ({
-  difference: 'Key miss in second object',
+secondKeyMissed = value1 => ({
+  difference: 'Key not in second object',
   value1
 })
 
-module.exports.typesDiffer = (type1, value1, type2, value2) => ({
+typesDiffer = (type1, value1, type2, value2) => ({
   difference: 'Types differ',
   type1, value1, type2, value2
 })
 
-module.exports.compare = (type, value1, value2) => {
+compare = (type, value1, value2) => {
   switch (type) {
     case 'number':
     case 'string':
@@ -34,45 +34,54 @@ module.exports.compare = (type, value1, value2) => {
   return null
 }
 
-module.exports.compareValues = (value1, value2) => 
+compareValues = (value1, value2) =>
   value1 !== value2 ? 
-  {
-    difference: 'The values differ',
+  ({
+    difference: 'Values differ',
     value1,
     value2
-  } :
+  }) :
   null
 
-module.exports.compareFunctions = (func1, func2) => 
+
+compareFunctions = (func1, func2) => 
   func1.toString() !== func2.toString() ? {
-    difference: 'The functions differ',
+    difference: 'Functions differ',
     func1: func1.toString(),
     func2: func2.toString()
   } : null
 
-module.exports.getDiffs = ( obj1, obj2 ) => {
-  const everyKey = everyKeyIn( obj1, obj2)
+getDiffs = ( obj1, obj2 ) => {
   const diffObj = {}
-  everyKey.forEach( key =>{
-    const valueIn1 = obj1[key]
-    const valueIn2 = obj2[key]
-    const typeIn1 = typeof valueIn1
-    const typeIn2 = typeof valueIn2
-
-    if(valueIn1 === undefined){
-      diffObj[key] = firstKeyMissed(valueIn2)
-    } else if (valueIn2 === undefined) {
-      diffObj[key] = secondKeyMissed(valueIn1)
-    }else if( typeIn1 === typeIn2 ){
-      const difference = compare( typeIn1, valueIn1, valueIn2)
+  everyKeyIn(obj1, obj2).forEach( key =>{
+    const value1 = obj1[key]
+    const value2 = obj2[key]
+    const type1 = typeof value1
+    const type2 = typeof value2
+    if(value1 === undefined){
+      diffObj[key] = firstKeyMissed(value2)
+    } else if (value2 === undefined) {
+      diffObj[key] = secondKeyMissed(value1)
+    }else if( type1 === type2 ){
+      const difference = compare( type1, value1, value2)
       if(difference) diffObj[key] = difference
     }else{
-      diffObj[key] = typesDiffer(typeIn1, valueIn1, typeIn2, valueIn2)
+      diffObj[key] = typesDiffer(type1, value1, type2, value2)
     }
   })
   return Object.keys(diffObj).length !== 0 ? diffObj : null
 }
 
-module.exports.isEqual = (obj1, obj2) => {
-  return getDiffs(obj1, obj2) === null
+isEqual = (obj1, obj2) => getDiffs(obj1, obj2) === null
+
+module.exports = {
+  everyKeyIn,
+  firstKeyMissed,
+  secondKeyMissed,
+  typesDiffer,
+  compare,
+  compareValues,
+  compareFunctions,
+  getDiffs,
+  isEqual
 }
