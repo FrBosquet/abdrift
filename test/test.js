@@ -7,27 +7,27 @@ describe('Library to get differences between objects', function(){
       const obj1 = {a: true, c: true}
       const obj2 = {b: true, c: true}
       const expect = ['a', 'b', 'c']
-      assert.deepEqual(differ.getEveryKeyIn(obj1, obj2), expect)
+      assert.deepEqual(differ.everyKeyIn(obj1, obj2), expect)
     })
 
     it('It should return a key miss message 1/2', function(){
       const expect = {
-        difference: 'Key miss in first object',
+        difference: 'Key not in first object',
         value2: 6
       }
       assert.deepEqual(
-        differ.createFirstValueMissedMessage(6),
+        differ.firstKeyMissed(6),
         expect 
       )
     })
 
     it('It should return a key miss message 2/2', function () {
       const expect = {
-        difference: 'Key miss in second object',
+        difference: 'Key not in second object',
         value1: 6
       }
       assert.deepEqual(
-        differ.createSecondValueMissedMessage(6),
+        differ.secondKeyMissed(6),
         expect
       )
     })
@@ -39,7 +39,7 @@ describe('Library to get differences between objects', function(){
         type2: 'string', value2: 'foo'
       } 
       assert.deepEqual(
-        differ.createTypesDifferMessage('number', 3, 'string', 'foo'),
+        differ.typesDiffer('number', 3, 'string', 'foo'),
         expect
       )
     })
@@ -50,7 +50,7 @@ describe('Library to get differences between objects', function(){
     
     it('It should return a values differ message 1/3', function(){
       const expect = {
-        difference: 'The values differ',
+        difference: 'Values differ',
         value1: 5,
         value2: 4
       }
@@ -59,7 +59,7 @@ describe('Library to get differences between objects', function(){
 
     it('It should return a values differ message 2/3', function () {
       const expect = {
-        difference: 'The values differ',
+        difference: 'Values differ',
         value1: 'foo',
         value2: 'bar'
       }
@@ -68,7 +68,7 @@ describe('Library to get differences between objects', function(){
 
     it('It should return a values differ message 3/3', function () {
       const expect = {
-        difference: 'The values differ',
+        difference: 'Values differ',
         value1: true,
         value2: false
       }
@@ -81,7 +81,7 @@ describe('Library to get differences between objects', function(){
 
     it('It should return a functions differ message', function(){
       assert.deepEqual(differ.compareFunctions(()=>10,()=>20), {
-        difference: 'The functions differ',
+        difference: 'Functions differ',
         func1: (()=>10).toString(),
         func2: (()=>20).toString()
       })
@@ -100,7 +100,7 @@ describe('Library to get differences between objects', function(){
       const obj2 = { a: 2 }
       const expect = {
         a : {
-          difference: 'The values differ',
+          difference: 'Values differ',
           value1: 3,
           value2: 2
         }
@@ -119,7 +119,7 @@ describe('Library to get differences between objects', function(){
       const obj2 = { a: 'bar' }
       const expect = {
         a: {
-          difference: 'The values differ',
+          difference: 'Values differ',
           value1: 'foo',
           value2: 'bar'
         }
@@ -138,7 +138,7 @@ describe('Library to get differences between objects', function(){
       const obj2 = { a: false }
       const expect = {
         a: {
-          difference: 'The values differ',
+          difference: 'Values differ',
           value1: true,
           value2: false
         }
@@ -157,7 +157,7 @@ describe('Library to get differences between objects', function(){
       const obj2 = { a: function( k ){ return k * 2}}
       const expect = {
         a: {
-          difference: 'The functions differ',
+          difference: 'Functions differ',
           func1: obj1.a.toString(),
           func2: obj2.a.toString()
         }
@@ -179,14 +179,14 @@ describe('Library to get differences between objects', function(){
     it('It should return {difference: "key missed in first object", value2: value2} when the key is not present in first object', function(){
       const obj1 = {a: 3}
       const obj2 = {a: 3, b: 6}
-      const expect = { b: { difference: 'Key miss in first object', value2: 6 } }
+      const expect = { b: { difference: 'Key not in first object', value2: 6 } }
       assert.deepEqual(differ.getDiffs(obj1, obj2), expect)
     })
 
     it('It should return {difference: "key missed in second object", value1: value1} when the key is not present in second object', function(){
       const obj1 = {a: 3, b: 6}
       const obj2 = {a: 3}
-      const expect = { b: { difference: 'Key miss in second object', value1: 6 } }
+      const expect = { b: { difference: 'Key not in second object', value1: 6 } }
       assert.deepEqual(differ.getDiffs(obj1, obj2), expect)
     })
   })
@@ -204,7 +204,7 @@ describe('Library to get differences between objects', function(){
       const expect = { a: 
         { 
           '4': {
-            difference: 'The values differ',
+            difference: 'Values differ',
             value1: 3,
             value2: 8
           } 
@@ -293,7 +293,7 @@ describe('Library to get differences between objects', function(){
       const expect = {
         values: { 
           special: {
-            difference: 'The values differ',
+            difference: 'Values differ',
             value1: 10,
             value2: 9
           }
@@ -326,7 +326,7 @@ describe('Library to get differences between objects', function(){
 
       const expect = {
         title: {
-          difference: 'The values differ',
+          difference: 'Values differ',
           value1: 'foo',
           value2: 'bar'
         },
@@ -371,7 +371,7 @@ describe('Library to get differences between objects', function(){
 
       const expect = {
         title: {
-          difference: 'The values differ',
+          difference: 'Values differ',
           value1: 'foo',
           value2: 'bar'
         },
@@ -387,16 +387,16 @@ describe('Library to get differences between objects', function(){
           }
         },
         checked: {
-          difference: 'The values differ',
+          difference: 'Values differ',
           value1: true,
           value2: false
         },
         near: {
-          difference: 'Key miss in first object',
+          difference: 'Key not in first object',
           value2: 'yes'
         },
         far: {
-          difference: 'Key miss in second object',
+          difference: 'Key not in second object',
           value1: [3, 4, 8]
         }
       }
