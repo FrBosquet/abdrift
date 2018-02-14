@@ -1,4 +1,4 @@
-# abdrify
+# abdrift
 
 > A zero dependency library for getting differences amongs js objects. The output is served in a semantically and human friendly way.
 
@@ -31,10 +31,10 @@ const obj1 = {
 
 const obj2 ={
   "name": "abdriffffter",
-    "version": "1.0.0",
-      "description": "Get differences beetween two objects",
-        "main": "index.js",
-          "scripts": {
+  "version": "1.0.0",
+  "description": "Get differences beetween two objects",
+  "main": "index.js",
+  "scripts": {
     "test": "mocha --watch ./test/test.js"
   },
   "array": [5,6,7],
