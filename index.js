@@ -74,14 +74,4 @@ const getDiffs = ( obj1, obj2 ) => {
 
 const isEqual = (obj1, obj2) => getDiffs(obj1, obj2) === null
 
-module.exports = {
-  everyKeyIn,
-  firstKeyMissed,
-  secondKeyMissed,
-  typesDiffer,
-  compare,
-  compareValues,
-  compareFunctions,
-  getDiffs,
-  isEqual
-}
+module.exports = getDiffs
