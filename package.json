@@ -1,6 +1,6 @@
 {
   "name": "abdrift",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Get differences beetween two objects semantically",
   "main": "index.js",
   "scripts": {
