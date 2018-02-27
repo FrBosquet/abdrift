@@ -1,5 +1,5 @@
 const assert = require('assert')
-const differ = require('../index')
+const differ = require('../src/index')
 
 describe('Library to get differences between objects', function(){
   describe('Auxiliary functions', function(){
